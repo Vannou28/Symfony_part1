@@ -6,21 +6,11 @@ body {
 }
 
 // customize some Bootstrap variables
-$light: darken(#535a34, 20%);
-$primary: darken(#140568, 20%);
+$light: darken(#eed816, 0%);
+$primary: darken(#f0ff1c, 0%);
 
-$info: darken(#e0c840, 20%);
-$dark: darken(#7d6bcc, 40%);
+$info: darken(#40e0bd, 0%);
+$dark: darken(#170b4d, 0%);
 // the ~ allows you to reference things in node_modules
 @import "~bootstrap/scss/bootstrap";
 
-
-.navbar {
-
-}
-
-.navClass {
-    background-position: center;
-    background-size: cover;
-    height: 100px;
-}
