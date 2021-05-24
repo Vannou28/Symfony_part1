@@ -1,0 +1,16 @@
+
+
+body {
+    background-color: rgb(24, 16, 59);
+    margin: 0;
+}
+
+// customize some Bootstrap variables
+$light: darken(#eed816, 0%);
+$primary: darken(#f0ff1c, 0%);
+
+$info: darken(#40e0bd, 0%);
+$dark: darken(#170b4d, 0%);
+// the ~ allows you to reference things in node_modules
+@import "~bootstrap/scss/bootstrap";
+
