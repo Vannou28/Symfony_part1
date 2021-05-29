@@ -1,4 +1,4 @@
-
+@import "~bootstrap/scss/bootstrap";
 
 body {
     background-color: rgb(24, 16, 59);
@@ -7,10 +7,10 @@ body {
 
 // customize some Bootstrap variables
 $light: darken(#eed816, 0%);
-$primary: darken(#f0ff1c, 0%);
+$primary: darken(#020111, 0%);
 
-$info: darken(#40e0bd, 0%);
+$info: darken(#d5e040, 0%);
 $dark: darken(#170b4d, 0%);
-// the ~ allows you to reference things in node_modules
-@import "~bootstrap/scss/bootstrap";
+
+
 
