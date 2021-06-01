@@ -32,7 +32,6 @@ class ProgramController extends AbstractController
         'programs' => $programs
         ]);
     }
-
     /**
      * Getting a program by id
      *
@@ -44,12 +43,13 @@ class ProgramController extends AbstractController
        $seasons = $this->getDoctrine()
         ->getRepository(Season::class)
         ->findByProgram([$program -> getId()]);
-    //var_dump($seasons); exit;
+
         if (!$program) {
             throw $this->createNotFoundException(
                 'No program with id : '.$id.' found in program\'s table.'
             );
         }
+
         return $this->render('program/show.html.twig', [
             'program' => $program,
             'seasons' => $seasons,
@@ -84,7 +84,6 @@ class ProgramController extends AbstractController
             'season' => $season,
             'episodes' => $episodes
         ]);
-
     }
 
     /**
@@ -100,7 +99,6 @@ class ProgramController extends AbstractController
             'season' => $season,
             'episode' => $episode
         ]);
-
     }
 }
     
