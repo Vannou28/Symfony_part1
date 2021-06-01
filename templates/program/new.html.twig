@@ -1,0 +1,11 @@
+{% extends "base.html.twig" %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid col-6 m-5">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input class="m-3" type='submit' value='Add program'>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
