@@ -9,6 +9,7 @@ use Doctrine\Persistence\ObjectManager;
 class CategoryFixtures extends Fixture
 {   
     const CATEGORIES = [
+        'Horreur',
         'Action',
         'Animation',
         'Aventure',
@@ -32,6 +33,9 @@ class CategoryFixtures extends Fixture
             $category->setName($cathegoryName);
             $manager->persist($category);
         }
+        
+
+        
         $manager->flush();
     }
 }
