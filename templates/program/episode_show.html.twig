@@ -1,0 +1,27 @@
+{# Cette vue affichera :
+le nom de la série
+le numéro de la saison
+le numéro et le titre de l'épisode
+le résumé de l'épisode #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}L'épisode{% endblock %}
+
+{% block body %}
+    <h1>{{ episode.title }} de {{ program.title }} de la saison {{ season.number }}</h1>
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="{{ program.poster }}" alt="Card image cap">
+                <div class="card-body">
+                    <h3 class="card-title">{{ program.title }}</h3>
+                    <h4 class="card-title">Saison {{ season.number }}</h4>
+                    <h5>{{ episode.number }} - {{ episode.title }} </h2>
+                    <p>{{ episode.synopsis }}</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    <a href="{{ path('app_index') }}">
+        Retour à l'accueil
+    </a>
+{% endblock %}
