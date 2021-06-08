@@ -15,6 +15,8 @@ use App\Entity\Category;
 use App\Entity\Season;
 use App\Entity\Episode;
 
+use App\Service\Slugify;
+
 /**
  * @Route("/programs", name="program_")
  */
@@ -117,14 +119,16 @@ class ProgramController extends AbstractController
         $form = $this->createForm(ProgramType::class, $program);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
-            // Deal with the submitted data
-            // Get the Entity Manager
+
+            $slugify = new Slugify($program->getTitle());
+            $slug = $slugify->generate();
+            dd($slug);
+            $program->setSlug($slug);
+
             $entityManager = $this->getDoctrine()->getManager();
-            // Persist Category Object
             $entityManager->persist($program);
-            // Flush the persisted object
             $entityManager->flush();
-            // Finally redirect to categories list
+
         return $this->redirectToRoute('program_index');
 
         }
