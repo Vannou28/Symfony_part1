@@ -8,6 +8,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
+use Symfony\Component\Mailer\MailerInterface;
+
 use App\Form\ProgramType;
 
 use App\Entity\Program;
@@ -111,7 +113,7 @@ class ProgramController extends AbstractController
      * 
      * @Route("/new", name="new")
      */
-    public function new(Request $request): Response
+    public function new(Request $request, MailerInterface $mailer): Response
     {
         $program = new Program();
         $form = $this->createForm(ProgramType::class, $program);
@@ -124,6 +126,15 @@ class ProgramController extends AbstractController
             $entityManager->persist($program);
             // Flush the persisted object
             $entityManager->flush();
+
+            $email = (new Email())
+            ->from($this->getParameter('mailer_from'))
+            ->to('your_email@example.com')
+            ->subject('Une nouvelle série vient d\'être publiée !')
+            ->html('<p>Une nouvelle série vient d\'être publiée sur Wild Séries !</p>');
+
+            $mailer->send($email);
+
             // Finally redirect to categories list
         return $this->redirectToRoute('program_index');
 
