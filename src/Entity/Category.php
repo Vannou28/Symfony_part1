@@ -30,7 +30,7 @@ class Category
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Program", mappedBy="category")
+    * @ORM\OneToMany(targetEntity="App\Entity\Program", mappedBy="category")
      * @Assert\NotBlank()
      */
     private $programs;
