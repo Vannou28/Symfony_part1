@@ -3,10 +3,12 @@
 namespace App\Service;
 
 
-class Slugify {
+class Slugify
+{
 
     const SPACE = " ";
-    private string $input;
+  /*  private string $input;
+    
     public function __construct(string $input)
     {
         $this->setInput($input);
@@ -30,6 +32,16 @@ class Slugify {
     public function getInput(): string
     {
         return $thos->input;
-    }
+    }*/
 
+        public function generate($input): string
+    {   
+
+        $input = iconv( 'UTF-8', 'ASCII//TRANSLIT//IGNORE', $input);   //retire les accents
+        $input = preg_replace("/[^a-zA-Z0-9]/"," ", $input); //garde que les chiffres
+        $input = preg_replace('/\s\s+/', ' ', $input); //retire les espace en trop
+        $input = str_replace(self::SPACE, "-",$input);   //remplace les espaces en -
+        $input = strtolower ($input);
+        return $input;
+    }
 }

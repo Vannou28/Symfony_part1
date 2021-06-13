@@ -7,6 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManagerInterface;
 
 use App\Form\ProgramType;
 
@@ -14,7 +15,6 @@ use App\Entity\Program;
 use App\Entity\Category;
 use App\Entity\Season;
 use App\Entity\Episode;
-
 use App\Service\Slugify;
 
 /**
@@ -42,7 +42,7 @@ class ProgramController extends AbstractController
     /**
      * Getting a program by id
      *
-     * @Route("/show/{id<^[0-9]+$>}", name="show")
+     * @Route("/show/{slug}", name="show")
      * @return Response
      */
     public function show(Program $program): Response
@@ -113,19 +113,16 @@ class ProgramController extends AbstractController
      * 
      * @Route("/new", name="new")
      */
-    public function new(Request $request): Response
+    public function new(Request $request, Slugify $slugify): Response
     {
         $program = new Program();
         $form = $this->createForm(ProgramType::class, $program);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()){
-
-            $slugify = new Slugify($program->getTitle());
-            $slug = $slugify->generate();
-            dd($slug);
+            
+            $slug = $slugify->generate($program->getTitle());
             $program->setSlug($slug);
-
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($program);
             $entityManager->flush();

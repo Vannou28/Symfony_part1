@@ -8,7 +8,7 @@
     <h3>Listes des series oÙ se trouve ce gars : </h3>
         <ul>
             {% for program in actor.programs %}
-                <a href="/programs/show/{{ program.id }}">
+                <a href="/programs/show/{{ program.slug }}">
                     <li> {{ program.title }} </li>
                 </a>
             {% endfor %}
