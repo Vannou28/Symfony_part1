@@ -1,0 +1,10 @@
+{% extends 'layoutEmail.html.twig' %}
+
+{% block body %}
+    <h1>novelle episode {{ episode.title }} created dans la serie {{ episode.season.program.title}}</h1>
+    <p>dans la saison {{ episode.season.number }}</p>
+    <p>salut le nouvelle episode est : {{ episode.title }} </p>
+    <p>Summary : {{ episode.synopsis }}
+    <p>le lien pour la serie : www.monstreamdeouf.fr/programs/{{ episode.season.program.slug }}
+{% endblock %}
+
