@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Service\Slugify;
 use App\Entity\Program;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -13,7 +14,10 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
     {  
         for ($i=0; $i < 6 ; $i++) {
             $program = new Program();
-            $program->setTitle('Serie'.$i);
+            $program->setTitle('Serie '.$i);
+            $slugify = new Slugify();
+            $slug = $slugify->generate($program->getTitle());
+            $program->setSlug($slug);
             $program->setSummary('Description Serie'.$i);
             $program->setPoster('https://picsum.photos/200');
             $program->setCategory($this->getReference('category_'.$i));
