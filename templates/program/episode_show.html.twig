@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
 {% block title %}L'épisode{% endblock %}
 
 {% block body %}
@@ -14,6 +14,19 @@
             <p>{{ episode.synopsis }}</p>
         </div>
     </div>
+    <h3>Commentaire :</h3>
+    
+    {% for comment in episode.comments %}
+        <p>rate : {{ comment.rate }}</p>
+        <p>Commentaire : {{ comment.comment }}</p>
+    {%  endfor %}
+    {% if app.user %}
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input class="btn btn-secondary" type='submit' value='Add comment'>
+        {{ form_end(form) }}
+
+    {% endif %}
     <a href="{{ path('app_index') }}">
         Retour à l'accueil
     </a>
