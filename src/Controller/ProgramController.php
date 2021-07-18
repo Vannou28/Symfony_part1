@@ -2,23 +2,25 @@
 // src/Controller/ProgramController.php
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Season;
+use App\Entity\Comment;
 
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Episode;
+use App\Entity\Program;
+use App\Entity\Category;
 
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
+use App\Service\Slugify;
+use App\Form\CommentType;
 
 use App\Form\ProgramType;
 
-use App\Entity\Program;
-use App\Entity\Category;
-use App\Entity\Season;
-use App\Entity\Episode;
-use App\Service\Slugify;
+use Symfony\Component\Mime\Email;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/programs", name="program_")
@@ -102,12 +104,30 @@ class ProgramController extends AbstractController
      * @Route("/{program<^[0-9]+$>}/season/{season<^[0-9]+$>}/episode/{episode<^[0-9]+$>}", name="program_episode_show")
      * @return Response
      */
-    public function showEpisode(Program $program, Season $season, Episode $episode){
+    public function showEpisode(Program $program, Season $season, Episode $episode, Request $request){
         
+        $comment =new Comment;
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($this->getUser()) {
+                
+                $entityManager = $this->getDoctrine()->getManager();
+                $comment->setUser($this->getUser());
+                $comment->setEpisode($episode);
+                $entityManager->persist($comment);
+                $entityManager->flush();
+                return $this->redirect($request->getUri());
+            }
+        }
+
         return $this->render('program/episode_show.html.twig', [
             'program' => $program,
             'season' => $season,
-            'episode' => $episode
+            'episode' => $episode,
+            "form" => $form->createView(),
         ]);
     }
 
